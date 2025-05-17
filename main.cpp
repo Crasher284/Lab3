@@ -1,9 +1,8 @@
 #include <iostream>
 
-#include "Deque.h"
+#include "Vector.h"
 
 int main() {
-    Deque<int>* d = new Deque<int>;
 
     return 0;
 }
