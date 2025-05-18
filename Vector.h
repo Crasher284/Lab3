@@ -25,6 +25,10 @@ template <typename T>
 concept EuclideanField = Field<T> && requires(T a) {
     { linal::abs(a) } -> std::convertible_to<double>;
     { linal::conjugate(a) } -> std::convertible_to<T>;
+    requires std::is_same_v<T, float> ||
+             std::is_same_v<T, double> ||
+             std::is_same_v<T, long double> ||
+             std::is_same_v<T, Complex>;
 };
 
 template <Field T>
@@ -43,6 +47,9 @@ public:
     Vector(T* array, int dim) : dim(dim){
         if(dim<0){
             throw std::invalid_argument("Vector: Vector size cannot be negative.");
+        }
+        if (!array && dim > 0) {
+            throw std::invalid_argument("Vector: Null array provided for non-zero dimension.");
         }
         data = new T[dim];
         for(int i=0;i<dim;i++){
@@ -92,7 +99,7 @@ public:
 
     Vector<T>& operator+=(const Vector<T>& other){
         if (other.getDim() != dim) {
-            throw std::invalid_argument("+: Vectors must have same size to be added to each other.");
+            throw std::invalid_argument("+=: Vectors must have same size to be added to each other.");
         }
         for(int i=0;i<dim;i++){
             data[i] = data[i] + other.getCoord(i);
@@ -129,7 +136,7 @@ public:
                 out += linal::abs(data[i]);
             }
         }else{
-            out = linal::abs(data[0]);
+            out = linal::abs(data[0]);;
             for(int i=1;i<dim;i++){
                 double a = linal::abs(data[i]);
                 if (a>out) out = a;
@@ -163,6 +170,14 @@ public:
             }
         }
         return *this;
+    }
+
+    bool operator==(const Vector<T>& other) const {
+        if (dim != other.dim) return false;
+        for (int i = 0; i < dim; i++) {
+            if (data[i] != other.data[i]) return false;
+        }
+        return true;
     }
 
     ~Vector(){

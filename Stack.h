@@ -14,6 +14,8 @@ public:
         data = new LinkedList<T>();
     }
 
+    Stack(const Stack& other) : data(new LinkedList<T>(*other.data)) {}
+
     void push(T item){
         data->prepend(item);
     }
@@ -23,6 +25,9 @@ public:
     }
 
     T pop(){
+        if (data->getLength() == 0) {
+            throw std::out_of_range("Cannot pop from empty stack.");
+        }
         T item = data->getFirst;
         data->popForward();
         return item;
@@ -35,6 +40,20 @@ public:
     void clear(){
         delete data;
         data = new LinkedList<T>();
+    }
+
+    bool isEmpty() const { return data->getLength() == 0; }
+
+    Stack& operator=(const Stack& other) {
+        if (this != &other) {
+            delete data;
+            data = new LinkedList<T>(*other.data);
+        }
+        return *this;
+    }
+
+    ~Stack() {
+        delete data;
     }
 private:
     LinkedList<T>* data;

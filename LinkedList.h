@@ -17,17 +17,12 @@ public:
             tail = nullptr;
             return;
         }
-        head = new Node;
-        head->data = items[0];
-        head->next = nullptr;
+        head = new Node(items[0]);
         Node* current = head;
         for(int i=1;i<count;i++){
-            current->next = new Node;
-            current->next->prev = current;
+            current->next = new Node(items[i], nullptr, current);
             current = current->next;
-            current->data = items[i];
         }
-        current->next = nullptr;
         tail = current;
     }
 
@@ -40,19 +35,14 @@ public:
             tail = nullptr;
             return;
         }
-        head = new Node;
-        head->data = list.head->data;
-        head->prev = nullptr;
+        head = new Node(list.head->data);
         Node* current = head;
         Node* cCurrent = list.head;
         while(cCurrent->next != nullptr){
-            current->next = new Node;
-            current->next->prev = current;
+            current->next = new Node(cCurrent->next->data, nullptr, current);
             current = current->next;
             cCurrent = cCurrent->next;
-            current->data = cCurrent->data;
         }
-        current->next = nullptr;
         tail = current;
     }
 
@@ -93,18 +83,15 @@ public:
         if(startIndex<0 || startIndex>=size || endIndex<0 || endIndex>=size || endIndex<startIndex){
             throw std::out_of_range("Used indexes or their combination are invalid.");
         }
-        int subSize = endIndex-startIndex+1;
-        T* output = new T[subSize];
+        auto output = new LinkedList<T>();
         Node* current = head;
         for(int i=0;i<=endIndex;i++){
             if(i>=startIndex){
-                output[i-startIndex]=current->data;
+                output->append(current->data);
             }
             current = current->next;
         }
-        auto* result = new LinkedList(output, subSize);
-        delete[] output;
-        return result;
+        return output;
     }
 
     int getLength(){
@@ -112,31 +99,55 @@ public:
     }
 
     void append(T item){
-        Node* nw = new Node;
-        nw->data = item;
-        nw->prev = tail;
+        Node* nw = new Node {item, nullptr, tail};
+        if(tail){
+            tail->next = nw;
+        }else{
+            head = nw;
+        }
         tail = nw;
         size++;
     }
 
     void prepend(T item){
-        Node* nw = new Node;
-        nw->data = item;
-        nw->next = head;
+        Node* nw = new Node {item, head, nullptr};
+        if(head){
+            head->prev = nw;
+        }else{
+            tail = nw;
+        }
         head = nw;
         size++;
     }
 
     void popForward(){
+        if(head == nullptr){
+            throw std::out_of_range("popForward: cannot delete element from empty list.");
+        }
         Node* ex = head->next;
         delete head;
         head = ex;
+        if(head) {
+            head->prev = nullptr;
+        }else{
+            tail = nullptr;
+        }
+        size--;
     }
 
     void popBackward(){
+        if(tail == nullptr){
+            throw std::out_of_range("popBackward: cannot delete element from empty list.");
+        }
         Node* ex = tail->prev;
         delete tail;
         tail = ex;
+        if(tail) {
+            tail->next = nullptr;
+        }else{
+            head = nullptr;
+        }
+        size--;
     }
 
     void insertAt(T item, int index){
@@ -144,22 +155,20 @@ public:
             throw std::out_of_range("Used index cannot be interpreted as index of Deque.");
         }
         if(index==0){
-            Node* temp = head;
-            head = new Node;
-            head->data = item;
-            head->next = temp;
-            size++;
+            prepend(item);
+            return;
+        }
+        if(index==size){
+            append(item);
             return;
         }
         Node* current = head;
         for(int i=0;i<index-1;i++){
             current = current->next;
         }
-        Node* temp = current->next;
-        current->next = new Node;
-        current = current->next;
-        current->data = item;
-        current->next = temp;
+        Node* nw = new Node{item, current->next, current};
+        current->next->prev = nw;
+        current->next = nw;
         size++;
     }
 
@@ -227,16 +236,6 @@ public:
         return *this;
     }
 
-    friend std::ostream& operator << (std::ostream &os, LinkedList<T> &list){
-        Node *current = list.head;
-        for(int i=0;i<list.size;i++){
-            os << "[" << current->data << "] -> ";
-            current = current->next;
-        }
-        os << "*";
-        return os;
-    };
-
     ~LinkedList(){
         Node* current = head;
         while(current != nullptr){
@@ -244,9 +243,6 @@ public:
             delete current;
             current = next;
             size--;
-        }
-        if(size!=0){
-            std::cerr << "Deleting Deque went wrong." << std::endl;
         }
         size=0;
     }
@@ -257,6 +253,8 @@ private:
         T data;
         Node* next;
         Node* prev;
+
+        Node(T data = T(), Node* next = nullptr, Node* prev = nullptr) : data(data), next(next), prev(prev) {}
     };
 
     Node* head;
@@ -266,10 +264,9 @@ private:
 
 template <typename T>
 std::ostream& operator << (std::ostream &os, LinkedList<T> &list){
-    auto *current = list.head;
-    for(int i=0;i<list.size;i++){
-        os << "[" << current->data << "] -> ";
-        current = current->next;
+    os << "* <-> ";
+    for(int i=0;i<list.getLength();i++){
+        os << "[" << list.get(i) << "] <-> ";
     }
     os << "*";
     return os;

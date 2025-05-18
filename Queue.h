@@ -14,6 +14,8 @@ public:
         data = new LinkedList<T>();
     }
 
+    Queue(const Queue& other) : data(new LinkedList<T>(*other.data)) {}
+
     void push(T item){
         data->append(item);
     }
@@ -23,6 +25,9 @@ public:
     }
 
     T pop(){
+        if (data->getLength() == 0) {
+            throw std::out_of_range("Cannot pop from empty queue.");
+        }
         T item = data->getFirst;
         data->popForward();
         return item;
@@ -35,6 +40,16 @@ public:
     void clear(){
         delete data;
         data = new LinkedList<T>();
+    }
+
+    bool isEmpty() const { return data->getLength() == 0; }
+
+    Queue& operator=(const Queue& other) {
+        if (this != &other) {
+            delete data;
+            data = new LinkedList<T>(*other.data);
+        }
+        return *this;
     }
 
     ~Queue(){

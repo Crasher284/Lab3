@@ -14,6 +14,8 @@ public:
         data = new LinkedList<T>();
     }
 
+    Deque(const Deque& other) : data(new LinkedList<T>(*other.data)) {}
+
     void prepend(T item){
         data->prepend(item);
     }
@@ -27,16 +29,22 @@ public:
     }
 
     T last(){
-        return data->getLast;
+        return data->getLast();
     }
 
     T popFirst(){
+        if (data->getLength() == 0) {
+            throw std::out_of_range("Cannot pop from empty deque.");
+        }
         T item = data->getFirst();
         data->popForward();
         return item;
     }
 
     T popLast(){
+        if (data->getLength() == 0) {
+            throw std::out_of_range("Cannot pop from empty deque.");
+        }
         T item = data->getLast();
         data->popBackward();
         return item;
@@ -49,6 +57,16 @@ public:
     void clear(){
         delete data;
         data = new LinkedList<T>;
+    }
+
+    bool isEmpty() const { return data->getLength() == 0; }
+
+    Deque& operator=(const Deque& other) {
+        if (this != &other) {
+            delete data;
+            data = new LinkedList<T>(*other.data);
+        }
+        return *this;
     }
 
     ~Deque(){
