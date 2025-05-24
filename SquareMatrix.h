@@ -84,6 +84,7 @@ public:
         if (this != &other) {
             delete[] this->data;
             this->_rows = other._rows;
+            this->_cols = other._cols;
             this->data = new T[this->_rows * this->_rows];
             for (int i = 0; i < this->_rows * this->_rows; i++) {
                 this->data[i] = other.data[i];

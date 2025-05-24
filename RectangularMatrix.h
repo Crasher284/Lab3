@@ -253,6 +253,14 @@ public:
         return new RectangularMatrix<T>(*this);
     }
 
+    bool operator==(const RectangularMatrix<T>& other) const {
+        if (_rows != other._rows || _cols != other._cols) return false;
+        for (int i = 0; i < _rows * _cols; ++i) {
+            if (std::abs(data[i] - other.data[i]) > 1e-6) return false;
+        }
+        return true;
+    }
+
     ~RectangularMatrix() {
         delete[] data;
     }

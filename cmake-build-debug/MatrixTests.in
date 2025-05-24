@@ -1,0 +1,55 @@
+Vector 10
+create 3 OK
+setCoord 0 1.0 OK
+setCoord 1 2.0 OK
+getCoord 0 1.0
+getCoord 1 2.0
+operator+ 1.0 1.0 0.0 2.0 1.0 0.0 3.0 2.0 0.0
+operator* 2.0 OK
+norm L2 2.23607
+scalar_product 1.0 1.0 0.0 3.0
+getCoord -1 BROKEN
+Finish
+RectangularMatrix 14
+create 2 3 OK
+set 0 0 1.0 OK
+set 1 1 2.0 OK
+get 0 0 1.0
+get 1 1 2.0
+operator+ 2.0 0.0 0.0 0.0 3.0 0.0 3.0 0.0 0.0 0.0 5.0 0.0
+operator* scalar 2.0 2.0 0.0 0.0 0.0 4.0 0.0
+operator* 1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 0.0 2.0
+swapRows 0 1 OK
+mulRow 0 2.0 OK
+combRows 1 0 1.0 OK
+norm NONE 5.744563
+clone NONE 0.0 4.0 0.0 1.0 4.0 0.0
+get 2 0 BROKEN
+Finish
+SquareMatrix 9
+create 2 OK
+set 0 0 1.0 OK
+set 0 1 0.0 OK
+set 1 0 0.0 OK
+set 1 1 1.0 OK
+det NONE 1.0
+create 1 OK
+det NONE 0.0
+det NONE BROKEN
+Finish
+SparseMatrix 14
+create 3 3 OK
+set 0 0 1.0 OK
+set 1 1 1.0 OK
+get 0 0 1.0
+get 1 1 1.0
+operator+ 1.0 0.0 0.0 1.0 1.0 0.0 0.0 0.0 2.0 2.0 0.0 0.0 1.0 2.0 0.0 0.0 0.0 2.0
+operator* scalar 2.0 2.0 0.0 0.0 0.0 2.0 0.0 0.0 0.0 0.0
+operator* 2.0 1.0 0.0 0.0 3.0 1.0 0.0 0.0 4.0 2.0 1.0 0.0 0.0 3.0 1.0 0.0 0.0 0.0
+swapRows 0 1 OK
+mulRow 0 2.0 OK
+combRows 1 0 1.0 OK
+norm NONE 3.0
+clone 0.0 2.0 0.0 1.0 2.0 0.0 0.0 0.0 0.0
+get 3 0 BROKEN
+Finish

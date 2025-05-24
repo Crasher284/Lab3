@@ -93,7 +93,7 @@ public:
         if (x < 0 || x >= _rows) {
             throw std::out_of_range("setRow: invalid row index.");
         }
-        if(vec.getDim() != _cols){
+        if (vec.getDim() != _cols) {
             throw std::invalid_argument("setRow: vector size is illegal.");
         }
         int i = 0;
@@ -109,7 +109,7 @@ public:
         }
         for (int j = 0; j < _cols; j++) {
             if (vec.getCoord(j) != T{}) {
-                int pos = i;
+                int pos = 0;
                 while (pos < data->getLength()) {
                     const Trenode& node = data->get(pos);
                     if (node.getX() > x || (node.getX() == x && node.getY() > j)) {
@@ -118,7 +118,6 @@ public:
                     pos++;
                 }
                 data->insertAt(Trenode(x, j, vec.getCoord(j)), pos);
-                i++;
             }
         }
         return *this;
@@ -367,6 +366,29 @@ public:
 
     Matrix<T>* clone() const {
         return new SparseMatrix<T>(*this);
+    }
+
+    SparseMatrix<T>& operator=(const SparseMatrix<T>& other) {
+        if (this != &other) {
+            delete data;
+            _rows = other._rows;
+            _cols = other._cols;
+            data = new LinkedList<Trenode>(*(other.data));
+        }
+        return *this;
+    }
+
+    bool operator==(const SparseMatrix<T>& other) const {
+        if (_rows != other._rows || _cols != other._cols) return false;
+        if (data->getLength() != other.data->getLength()) return false;
+        for (int i = 0; i < data->getLength(); ++i) {
+            const Trenode& n1 = data->get(i);
+            const Trenode& n2 = other.data->get(i);
+            if (n1.getX() != n2.getX() || n1.getY() != n2.getY() || std::abs(n1.getItem() - n2.getItem()) > 1e-6) {
+                return false;
+            }
+        }
+        return true;
     }
 
     ~SparseMatrix() {

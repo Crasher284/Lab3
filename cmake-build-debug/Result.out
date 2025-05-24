@@ -1,0 +1,95 @@
+Starting group "Stack", 9 tests ahead...
+Test 1, result: passed.
+Test 2, result: passed.
+Test 3, output: 10, answer: 10, result: passed.
+Test 4, output: 10, answer: 10, result: passed.
+Test 5, output: 1, answer: 1, result: passed.
+Test 6, output: 0, answer: 0, result: passed.
+Test 7, result: passed.
+Test 8, output: 1, answer: 1, result: passed.
+Test 9, result: passed, error: That LinkedList is empty; there are no first element.
+Group "Stack": 9 started, 9 passed, 0 failed, 0 broke.
+
+Starting group "Queue", 9 tests ahead...
+Test 1, result: passed.
+Test 2, result: passed.
+Test 3, output: 3, answer: 3, result: passed.
+Test 4, output: 3, answer: 3, result: passed.
+Test 5, output: 1, answer: 1, result: passed.
+Test 6, output: 0, answer: 0, result: passed.
+Test 7, result: passed.
+Test 8, output: 1, answer: 1, result: passed.
+Test 9, result: passed, error: That LinkedList is empty; there are no first element.
+Group "Queue": 9 started, 9 passed, 0 failed, 0 broke.
+
+Starting group "Deque", 9 tests ahead...
+Test 1, result: passed.
+Test 2, result: passed.
+Test 3, output: 4, answer: 4, result: passed.
+Test 4, output: 8, answer: 8, result: passed.
+Test 5, output: 4, answer: 4, result: passed.
+Test 6, output: 8, answer: 8, result: passed.
+Test 7, output: 0, answer: 0, result: passed.
+Test 8, output: 1, answer: 1, result: passed.
+Test 9, result: passed, error: That LinkedList is empty; there are no first element.
+Group "Deque": 9 started, 9 passed, 0 failed, 0 broke.
+
+Starting group "Vector", 10 tests ahead...
+Test 1, result: passed.
+Test 2, result: passed.
+Test 3, result: passed.
+Test 4, output: 1, answer: 1, result: passed.
+Test 5, output: 2, answer: 2, result: passed.
+Test 6, output: {3 2 0}, answer: {3 2 0}, result: passed.
+Test 7, result: passed.
+Test 8, output: 2.23607, answer: 2.23607, result: passed.
+Test 9, output: 3, answer: 3, result: passed.
+Test 10, result: passed, error: getCoord: Invalid coordinate index.
+Group "Vector": 10 started, 10 passed, 0 failed, 0 broke.
+
+Starting group "RectangularMatrix", 14 tests ahead...
+Test 1, result: passed.
+Test 2, result: passed.
+Test 3, result: passed.
+Test 4, output: 1, answer: 1, result: passed.
+Test 5, output: 2, answer: 2, result: passed.
+Test 6, output: [ 3 0 0; 0 5 0], answer: [ 3 0 0; 0 5 0], result: passed.
+Test 7, output: [ 2 0 0; 0 4 0], answer: [ 2 0 0; 0 4 0], result: passed.
+Test 8, output: [ 1 0; 0 2], answer: [ 1 0; 0 2], result: passed.
+Test 9, result: passed.
+Test 10, result: passed.
+Test 11, result: passed.
+Test 12, output: 5.74456, answer: 5.74456, result: passed.
+Test 13, output: [ 0 4 0; 1 4 0], answer: [ 0 4 0; 1 4 0], result: passed.
+Test 14, result: passed, error: get: invalid pair of indices.
+Group "RectangularMatrix": 14 started, 14 passed, 0 failed, 0 broke.
+
+Starting group "SquareMatrix", 9 tests ahead...
+Test 1, result: passed.
+Test 2, result: passed.
+Test 3, result: passed.
+Test 4, result: passed.
+Test 5, result: passed.
+Test 6, output: 1, answer: 1, result: passed.
+Test 7, result: passed.
+Test 8, output: 0, answer: 0, result: passed.
+Test 9, result: passed, error: stod
+Group "SquareMatrix": 9 started, 9 passed, 0 failed, 0 broke.
+
+Starting group "SparseMatrix", 14 tests ahead...
+Test 1, result: passed.
+Test 2, result: passed.
+Test 3, result: passed.
+Test 4, output: 1, answer: 1, result: passed.
+Test 5, output: 1, answer: 1, result: passed.
+Test 6, output: [ 2 0 0; 1 2 0; 0 0 2], answer: [ 2 0 0; 1 2 0; 0 0 2], result: passed.
+Test 7, output: [ 2 0 0; 0 2 0; 0 0 0], answer: [ 2 0 0; 0 2 0; 0 0 0], result: passed.
+Test 8, output: [ 2 1 0; 0 3 1; 0 0 0], answer: [ 2 1 0; 0 3 1; 0 0 0], result: passed.
+Test 9, result: passed.
+Test 10, result: passed.
+Test 11, result: passed.
+Test 12, output: 3, answer: 3, result: passed.
+Test 13, output: [ 0 2 0; 1 2 0; 0 0 0], answer: [ 0 2 0; 1 2 0; 0 0 0], result: passed.
+Test 14, result: passed, error: get: invalid pair of indices.
+Group "SparseMatrix": 14 started, 14 passed, 0 failed, 0 broke.
+

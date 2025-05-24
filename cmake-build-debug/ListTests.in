@@ -1,0 +1,33 @@
+Stack 9
+push 5 OK
+push 10 OK
+get NONE 10
+pop NONE 10
+size NONE 1
+isEmpty NONE 0
+clear NONE OK
+isEmpty NONE 1
+pop NONE BROKEN
+Finish
+Queue 9
+push 3 OK
+push 7 OK
+get NONE 3
+pop NONE 3
+size NONE 1
+isEmpty NONE 0
+clear NONE OK
+isEmpty NONE 1
+pop NONE BROKEN
+Finish
+Deque 9
+prepend 4 OK
+append 8 OK
+first NONE 4
+last NONE 8
+popFirst NONE 4
+popLast NONE 8
+size NONE 0
+isEmpty NONE 1
+popFirst NONE BROKEN
+Finish
