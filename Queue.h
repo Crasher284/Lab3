@@ -20,20 +20,17 @@ public:
         data->append(item);
     }
 
-    T get(){
+    T get() const{
         return data->getFirst();
     }
 
     T pop(){
-        if (data->getLength() == 0) {
-            throw std::out_of_range("Cannot pop from empty queue.");
-        }
-        T item = data->getFirst;
+        T item = data->getFirst();
         data->popForward();
         return item;
     }
 
-    int size(){
+    int size() const{
         return data->getLength();
     }
 

@@ -7,31 +7,11 @@
 
 #include <stdexcept>
 #include <concepts>
-#include "Complex.h"
+#include "Linal.h"
 
-enum class NormType { L1, L2, LInf};
+enum NormType { L1, L2, LInf};
 
-template <typename T>
-concept Field = requires(T a) {
-    { a + a } -> std::convertible_to<T>;
-    { a * a } -> std::convertible_to<T>;
-    { T{} } -> std::convertible_to<T>;
-    { T{1} } -> std::convertible_to<T>;
-    { -a } -> std::convertible_to<T>;
-    requires !std::is_same_v<T, bool>;
-};
-
-template <typename T>
-concept EuclideanField = Field<T> && requires(T a) {
-    { linal::abs(a) } -> std::convertible_to<double>;
-    { linal::conjugate(a) } -> std::convertible_to<T>;
-    requires std::is_same_v<T, float> ||
-             std::is_same_v<T, double> ||
-             std::is_same_v<T, long double> ||
-             std::is_same_v<T, Complex>;
-};
-
-template <Field T>
+template <linal::Field T>
 class Vector {
 public:
     explicit Vector(int dim) : dim(dim){
@@ -107,7 +87,7 @@ public:
         return *this;
     }
 
-    Vector<T> operator*(T other){
+    Vector<T> operator*(T other) const{
         Vector<T> out(dim);
         for(int i=0;i<dim;i++){
             out.setCoord(i, data[i]*other);
@@ -122,21 +102,21 @@ public:
         return *this;
     }
 
-    double norm(NormType type = NormType::L2) const requires EuclideanField<T> {
+    double norm(NormType type = L2) const requires linal::EuclideanField<T> {
         if (dim == 0) return 0.0;
         double out = 0.0;
-        if (type == NormType::L2){
+        if (type == L2){
             for(int i=0;i<dim;i++){
                 double a = linal::abs(data[i]);
                 out += a * a;
             }
             out = std::sqrt(out);
-        }else if(type == NormType::L1){
+        }else if(type == L1){
             for(int i=0;i<dim;i++){
                 out += linal::abs(data[i]);
             }
-        }else{
-            out = linal::abs(data[0]);;
+        }else{ //LInf
+            out = linal::abs(data[0]);
             for(int i=1;i<dim;i++){
                 double a = linal::abs(data[i]);
                 if (a>out) out = a;
@@ -145,7 +125,7 @@ public:
         return out;
     }
 
-    T scalar_product(const Vector<T>& other) const requires EuclideanField<T> {
+    T scalar_product(const Vector<T>& other) const requires linal::EuclideanField<T> {
         if (other.getDim() != dim) {
             throw std::invalid_argument("scalar_product: Vectors must have same size to be multiplied to each other.");
         }
@@ -156,7 +136,7 @@ public:
         return out;
     }
 
-    T operator*(const Vector<T>& other) const requires EuclideanField<T>{
+    T operator*(const Vector<T>& other) const requires linal::EuclideanField<T>{
         return scalar_product(other);
     }
 
@@ -201,7 +181,7 @@ std::ostream& operator<< (std::ostream& os, const Vector<T>& v){
     return os;
 }
 
-template <Field T>
+template <linal::Field T>
 Vector<T> operator*(const T& scalar, const Vector<T>& vec) {
     return vec * scalar;
 }

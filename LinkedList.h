@@ -37,35 +37,35 @@ public:
         }
         head = new Node(list.head->data);
         Node* current = head;
-        Node* cCurrent = list.head;
-        while(cCurrent->next != nullptr){
-            current->next = new Node(cCurrent->next->data, nullptr, current);
+        Node* cCurrent = list.head->next;
+        while (cCurrent != nullptr) {
+            current->next = new Node(cCurrent->data, nullptr, current);
             current = current->next;
             cCurrent = cCurrent->next;
         }
         tail = current;
     }
 
-    T getFirst(){
+    T getFirst() const{
         if(head == nullptr){
-            throw std::out_of_range("That Deque is empty; there are no first element.");
+            throw std::out_of_range("That LinkedList is empty; there are no first element.");
         }
         return head->data;
     }
 
-    T getLast(){
+    T getLast() const {
         if(tail == nullptr){
-            throw std::out_of_range("That Deque is empty; there are no last element.");
+            throw std::out_of_range("That LinkedList is empty; there are no last element.");
         }
         return tail->data;
     }
 
-    T get(int index){
+    T get(int index) const{
         if(index<0 || index>=size){
-            throw std::out_of_range("Used index cannot be interpreted as index of Deque.");
+            throw std::out_of_range("Used index cannot be interpreted as index of LinkedList.");
         }
         Node* current;
-        if(index<size-1-index) {
+        if(index<=size / 2) {
             current = head;
             for (int i = 0; i < index; i++) {
                 current = current->next;
@@ -94,7 +94,7 @@ public:
         return output;
     }
 
-    int getLength(){
+    int getLength() const{
         return size;
     }
 
@@ -151,8 +151,8 @@ public:
     }
 
     void insertAt(T item, int index){
-        if(index<0 || index>=size){
-            throw std::out_of_range("Used index cannot be interpreted as index of Deque.");
+        if(index<0 || index>size){
+            throw std::out_of_range("Used index cannot be interpreted as index of LinkedList.");
         }
         if(index==0){
             prepend(item);
@@ -170,6 +170,28 @@ public:
         current->next->prev = nw;
         current->next = nw;
         size++;
+    }
+
+    void popAt(int index){
+        if(index<0 || index>size){
+            throw std::out_of_range("Used index cannot be interpreted as index of LinkedList.");
+        }
+        if(index==0){
+            popForward();
+            return;
+        }
+        if(index==size-1){
+            popBackward();
+            return;
+        }
+        Node* current = head;
+        for(int i=0;i<index;i++){
+            current = current->next;
+        }
+        current->prev->next = current->next;
+        current->next->prev = current->prev;
+        delete current;
+        size--;
     }
 
     LinkedList<T> * concat(LinkedList<T> *list){
@@ -218,17 +240,15 @@ public:
             size = 0;
 
             if(other.head != nullptr){
-                head = new Node;
-                head->data = other.head->data;
+                head = new Node(other.head->data);
                 current = head;
-                Node* sCurrent = other.head;
-                while(sCurrent->next != nullptr){
-                    current->next = new Node;
+                Node* sCurrent = other.head->next;
+                while (sCurrent != nullptr) {
+                    current->next = new Node(sCurrent->data, nullptr, current);
                     current = current->next;
                     sCurrent = sCurrent->next;
-                    current->data = sCurrent->data;
                 }
-                current->next = nullptr;
+                tail = current;
                 size = other.size;
             }
             return *this;
@@ -242,7 +262,6 @@ public:
             Node* next = current->next;
             delete current;
             current = next;
-            size--;
         }
         size=0;
     }

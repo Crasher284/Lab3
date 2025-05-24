@@ -24,33 +24,27 @@ public:
         data->append(item);
     }
 
-    T first(){
+    T first() const{
         return data->getFirst();
     }
 
-    T last(){
+    T last() const{
         return data->getLast();
     }
 
     T popFirst(){
-        if (data->getLength() == 0) {
-            throw std::out_of_range("Cannot pop from empty deque.");
-        }
         T item = data->getFirst();
         data->popForward();
         return item;
     }
 
     T popLast(){
-        if (data->getLength() == 0) {
-            throw std::out_of_range("Cannot pop from empty deque.");
-        }
         T item = data->getLast();
         data->popBackward();
         return item;
     }
 
-    int getLength(){
+    int size() const{
         return data->getLength();
     }
 
