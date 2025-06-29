@@ -93,3 +93,39 @@ Test 13, output: [ 0 2 0; 1 2 0; 0 0 0], answer: [ 0 2 0; 1 2 0; 0 0 0], result:
 Test 14, result: passed, error: get: invalid pair of indices.
 Group "SparseMatrix": 14 started, 14 passed, 0 failed, 0 broke.
 
+Starting group "Stack", 9 tests ahead...
+Test 1, result: passed.
+Test 2, result: passed.
+Test 3, output: second, answer: second, result: passed.
+Test 4, output: second, answer: second, result: passed.
+Test 5, output: 1, answer: 1, result: passed.
+Test 6, output: 0, answer: 0, result: passed.
+Test 7, result: passed.
+Test 8, output: 1, answer: 1, result: passed.
+Test 9, result: passed, error: That LinkedList is empty; there are no first element.
+Group "Stack": 9 started, 9 passed, 0 failed, 0 broke.
+
+Starting group "Queue", 9 tests ahead...
+Test 1, result: passed.
+Test 2, result: passed.
+Test 3, output: third, answer: third, result: passed.
+Test 4, output: third, answer: third, result: passed.
+Test 5, output: 1, answer: 1, result: passed.
+Test 6, output: 0, answer: 0, result: passed.
+Test 7, result: passed.
+Test 8, output: 1, answer: 1, result: passed.
+Test 9, result: passed, error: That LinkedList is empty; there are no first element.
+Group "Queue": 9 started, 9 passed, 0 failed, 0 broke.
+
+Starting group "Deque", 9 tests ahead...
+Test 1, result: passed.
+Test 2, result: passed.
+Test 3, output: fifth, answer: fifth, result: passed.
+Test 4, output: sixth, answer: sixth, result: passed.
+Test 5, output: fifth, answer: fifth, result: passed.
+Test 6, output: sixth, answer: sixth, result: passed.
+Test 7, output: 0, answer: 0, result: passed.
+Test 8, output: 1, answer: 1, result: passed.
+Test 9, result: passed, error: That LinkedList is empty; there are no first element.
+Group "Deque": 9 started, 9 passed, 0 failed, 0 broke.
+

@@ -556,6 +556,226 @@ int main() {
         }
         out << std::endl;
     }
+    delete vector;
+    delete rectMatrix;
+    delete squareMatrix;
+    delete sparseMatrix;
     in_matrix.close();
+
+    std::ifstream in_string("StringTests.in");
+    if (!in_string.is_open()) {
+        std::cerr << "Could not open StringTests.in.";
+        return 1;
+    }
+    auto* stackN = new Stack<std::string>;
+    auto* queueN = new Queue<std::string>;
+    auto* dequeN = new Deque<std::string>;
+    cnt = -1; pCnt = 0; mxCnt = 0; bCnt = 0;
+    while(std::getline(in_string, line)){
+        std::vector<std::string> words = parser(line);
+        if(words.empty()){
+            continue;
+        }else if(words.size() == 1){
+            if(cnt == -1) {
+                std::cerr << "Corrupted tests.";
+                return 1;
+            }
+            out << "Group \"" << name << "\": " << mxCnt << " started, " << pCnt << " passed, " << mxCnt - pCnt - bCnt << " failed, " << bCnt << " broke." << std::endl;
+        }else if(words.size() == 2) {
+            cnt = 0; pCnt = 0; bCnt = 0;
+            name = words[0];
+            mxCnt = std::stoi(words[1]);
+            out << "Starting group \"" << name << "\", " << mxCnt << " tests ahead...";
+        }else{
+            method = words[0];
+            cnt++;
+            try {
+                if (name == "Stack") {
+                    if (method == "push") {
+                        stackN->push(words[1]);
+                        pCnt++;
+                        out << "Test " << cnt << ", result: passed.";
+                    }else if (method == "get") {
+                        const std::string temp = stackN->get();
+                        const std::string& ans = words[2];
+                        out << "Test " << cnt << ", output: " << temp << ", answer: " << ans << ", result: ";
+                        if(temp == ans){
+                            pCnt++;
+                            out << "passed.";
+                        }else{
+                            out << "failed.";
+                        }
+                    }else if (method == "pop") {
+                        const std::string temp = stackN->pop();
+                        const std::string& ans = words[2];
+                        out << "Test " << cnt << ", output: " << temp << ", answer: " << ans << ", result: ";
+                        if(temp == ans){
+                            pCnt++;
+                            out << "passed.";
+                        }else{
+                            out << "failed.";
+                        }
+                    }else if (method == "size") {
+                        const int temp = stackN->size();
+                        const int ans = std::stoi(words[2]);
+                        out << "Test " << cnt << ", output: " << temp << ", answer: " << ans << ", result: ";
+                        if(temp == ans){
+                            pCnt++;
+                            out << "passed.";
+                        }else{
+                            out << "failed.";
+                        }
+                    }else if (method == "isEmpty") {
+                        const std::string temp = stackN->isEmpty() ? "1" : "0";
+                        const std::string& ans = words[2];
+                        out << "Test " << cnt << ", output: " << temp << ", answer: " << ans << ", result: ";
+                        if(temp == ans){
+                            pCnt++;
+                            out << "passed.";
+                        }else{
+                            out << "failed.";
+                        }
+                    }else if (method == "clear") {
+                        stackN->clear();
+                        pCnt++;
+                        out << "Test " << cnt << ", result: passed.";
+                    }
+                } else if (name == "Queue") {
+                    if (method == "push") {
+                        queueN->push(words[1]);
+                        pCnt++;
+                        out << "Test " << cnt << ", result: passed.";
+                    } else if (method == "get") {
+                        const std::string temp = queueN->get();
+                        const std::string& ans = words[2];
+                        out << "Test " << cnt << ", output: " << temp << ", answer: " << ans << ", result: ";
+                        if (temp == ans) {
+                            pCnt++;
+                            out << "passed.";
+                        } else {
+                            out << "failed.";
+                        }
+                    } else if (method == "pop") {
+                        const std::string temp = queueN->pop();
+                        const std::string& ans = words[2];
+                        out << "Test " << cnt << ", output: " << temp << ", answer: " << ans << ", result: ";
+                        if (temp == ans) {
+                            pCnt++;
+                            out << "passed.";
+                        } else {
+                            out << "failed.";
+                        }
+                    } else if (method == "size") {
+                        const int temp = queueN->size();
+                        const int ans = std::stoi(words[2]);
+                        out << "Test " << cnt << ", output: " << temp << ", answer: " << ans << ", result: ";
+                        if (temp == ans) {
+                            pCnt++;
+                            out << "passed.";
+                        } else {
+                            out << "failed.";
+                        }
+                    } else if (method == "isEmpty") {
+                        const std::string temp = queueN->isEmpty() ? "1" : "0";
+                        const std::string& ans = words[2];
+                        out << "Test " << cnt << ", output: " << temp << ", answer: " << ans << ", result: ";
+                        if (temp == ans) {
+                            pCnt++;
+                            out << "passed.";
+                        } else {
+                            out << "failed.";
+                        }
+                    } else if (method == "clear") {
+                        queueN->clear();
+                        pCnt++;
+                        out << "Test " << cnt << ", result: passed.";
+                    }
+                } else if (name == "Deque") {
+                    if (method == "prepend") {
+                        dequeN->prepend(words[1]);
+                        pCnt++;
+                        out << "Test " << cnt << ", result: passed.";
+                    } else if (method == "append") {
+                        dequeN->append(words[1]);
+                        pCnt++;
+                        out << "Test " << cnt << ", result: passed.";
+                    } else if (method == "first") {
+                        const std::string temp = dequeN->first();
+                        const std::string& ans = words[2];
+                        out << "Test " << cnt << ", output: " << temp << ", answer: " << ans << ", result: ";
+                        if (temp == ans) {
+                            pCnt++;
+                            out << "passed.";
+                        } else {
+                            out << "failed.";
+                        }
+                    } else if (method == "last") {
+                        const std::string temp = dequeN->last();
+                        const std::string& ans = words[2];
+                        out << "Test " << cnt << ", output: " << temp << ", answer: " << ans << ", result: ";
+                        if (temp == ans) {
+                            pCnt++;
+                            out << "passed.";
+                        } else {
+                            out << "failed.";
+                        }
+                    } else if (method == "popFirst") {
+                        const std::string temp = dequeN->popFirst();
+                        const std::string& ans = words[2];
+                        out << "Test " << cnt << ", output: " << temp << ", answer: " << ans << ", result: ";
+                        if (temp == ans) {
+                            pCnt++;
+                            out << "passed.";
+                        } else {
+                            out << "failed.";
+                        }
+                    } else if (method == "popLast") {
+                        const std::string temp = dequeN->popLast();
+                        const std::string& ans = words[2];
+                        out << "Test " << cnt << ", output: " << temp << ", answer: " << ans << ", result: ";
+                        if (temp == ans) {
+                            pCnt++;
+                            out << "passed.";
+                        } else {
+                            out << "failed.";
+                        }
+                    } else if (method == "size") {
+                        const int temp = dequeN->size();
+                        const int ans = std::stoi(words[2]);
+                        out << "Test " << cnt << ", output: " << temp << ", answer: " << ans << ", result: ";
+                        if (temp == ans) {
+                            pCnt++;
+                            out << "passed.";
+                        } else {
+                            out << "failed.";
+                        }
+                    } else if (method == "isEmpty") {
+                        const std::string temp = dequeN->isEmpty() ? "1" : "0";
+                        const std::string& ans = words[2];
+                        out << "Test " << cnt << ", output: " << temp << ", answer: " << ans << ", result: ";
+                        if (temp == ans) {
+                            pCnt++;
+                            out << "passed.";
+                        } else {
+                            out << "failed.";
+                        }
+                    }
+                }
+            } catch (const std::exception& error){
+                if(words[2] == "BROKEN"){
+                    pCnt++;
+                    out << "Test " << cnt << ", result: passed, error: " << error.what();
+                }else{
+                    bCnt++;
+                    out << "Test " << cnt << ", answer: " << words[2] << ", result: broken, error: " << error.what();
+                }
+            }
+        }
+        out << std::endl;
+    }
+    delete stackN;
+    delete queueN;
+    delete dequeN;
+    in_string.close();
     out.close();
 }

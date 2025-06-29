@@ -92,7 +92,6 @@ namespace linal {
         if (denom == 0.0) throw std::invalid_argument("inverse: Division by zero.");
         return {z.real() / denom, -z.imag() / denom};
     }
-
     template <typename T>
     concept Field = requires(T a, T b, T c) {
         { a == b } -> std::convertible_to<bool>;
@@ -108,6 +107,7 @@ namespace linal {
 
         requires !std::is_same_v<T, bool>;
     };
+
 
     template <typename T>
     concept EuclideanField = Field<T> && requires(T a) {

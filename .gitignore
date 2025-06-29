@@ -3,3 +3,4 @@ cmake-build-debug/**
 !cmake-build-debug/Result.out
 !cmake-build-debug/ListTests.in
 !cmake-build-debug/MatrixTests.in
+!cmake-build-debug/StringTests.in
